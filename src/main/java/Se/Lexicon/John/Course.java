@@ -3,7 +3,6 @@ package Se.Lexicon.John;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import Se.Lexicon.John.Student;
 
 public class Course {
     //Static Field
@@ -41,5 +40,13 @@ public class Course {
     public void unregister (Student student) {
         this.students.remove(student);
         student.getCourses().remove(this);
+    }
+
+    @Override
+    public String toString() {
+        return "\nCourse Id: " + id +
+                "\nCourse Name: " + courseName +
+                "\nStart Date: " + startDate +
+                "\nDuration: " + weekDuration + " weeks";
     }
 }

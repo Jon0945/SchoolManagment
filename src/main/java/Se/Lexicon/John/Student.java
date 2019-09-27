@@ -7,6 +7,7 @@ public class Student {
     //Static field
     private static int studentCounter = 1;
 
+    //Field
     private int id;
     private String name;
     private String email;
@@ -28,5 +29,13 @@ public class Student {
         this.name = name;
         this.email = email;
         this.adress = adress;
+    }
+
+    @Override
+    public String toString() {
+        return "\nStudent ID: " + id +
+                "\nName: " + name +
+                "\nEmail: " + email +
+                "\nAdress: " + adress;
     }
 }

@@ -21,7 +21,7 @@ public class StudentDAOList implements StudentDAO {
     @Override
     public Student findByEmail(String email) {
         for (Student s : students) {
-            if (email.equals(s.getEmail())) {
+            if (email.contains(s.getEmail())) {
                 return s;
             }
         }
