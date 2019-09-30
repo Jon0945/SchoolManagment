@@ -3,6 +3,7 @@ package Se.Lexicon.John;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+
 import Se.Lexicon.John.data_access.StudentDAOList;
 import Se.Lexicon.John.data_access.CourseDAOList;
 
@@ -14,10 +15,10 @@ public class SchoolManagment {
     private Course selectedCourse = null;
 
     public void menu() {
-        studentlist.saveStudent(new Student("Ture Test","ture.test@gmail.com","Testvägen 42"));
-        studentlist.saveStudent(new Student("Ture Vest","ture.vest@hotmale.com","Vestvägen 24"));
-        courselist.saveCourse((new Course("Java Masterclass",LocalDate.parse("2019-08-19"),40)));
-        courselist.saveCourse(new Course("C# for Dummies",LocalDate.parse("2019-10-23"),20));
+        studentlist.saveStudent(new Student("Ture Test", "ture.test@gmail.com", "Testvägen 42"));
+        studentlist.saveStudent(new Student("Ture Vest", "ture.vest@hotmale.com", "Vestvägen 24"));
+        courselist.saveCourse((new Course("Java Masterclass", LocalDate.parse("2019-08-19"), 40)));
+        courselist.saveCourse(new Course("C# for Dummies", LocalDate.parse("2019-10-23"), 20));
         boolean keepLooping = true;
         while (keepLooping) {
             System.out.println("     __...--~~~~~-._   _.-~~~~~--...__");
@@ -35,7 +36,7 @@ public class SchoolManagment {
 
             int selection = askUserForNumber("Select");
 
-            switch(selection) {
+            switch (selection) {
                 case 1:
                     studentManagement();
                     break;
@@ -68,7 +69,7 @@ public class SchoolManagment {
 
             int selection = askUserForNumber("Selection");
 
-            switch(selection) {
+            switch (selection) {
                 case 1:
                     Student student = new Student(
                             askUserFor("Student name"),
@@ -78,36 +79,41 @@ public class SchoolManagment {
                     studentlist.saveStudent(student);
                     break;
                 case 2:
-                    break;
+                    try {
+                        deleteStudent(selectedStudent);
+                        break;
+                    } catch (Exception NullPointerException) { break; }
                 case 3:
-                    break;
+                    selectedStudent = selectStudent(studentlist.findAll());
+                    try {
+                        System.out.println("Student selected: \n\n" + "Student ID: " + selectedStudent.getId() +
+                                "\n" + "Student Name: " + selectedStudent.getName());
+                        break;
+                    } catch(Exception NullPointerException) { break; }
                 case 4:
                     String name = askUserFor("Name");
                     List<Student> nameresult = studentlist.findByName(name);
-                    if(nameresult.isEmpty()) {
+                    if (nameresult.isEmpty()) {
                         System.out.println("\nNo students found with that name!");
-                    }
-                    else {
+                    } else {
                         nameresult.forEach(System.out::println);
                     }
                     break;
                 case 5:
                     String email = askUserFor("Email");
                     Student emailresult = studentlist.findByEmail(email);
-                    if(emailresult == null) {
+                    if (emailresult == null) {
                         System.out.println("\nNo students found with that email!");
-                    }
-                    else {
+                    } else {
                         System.out.println(emailresult);
                     }
                     break;
                 case 6:
                     int studentid = askUserForNumber("Student ID");
                     Student idresult = studentlist.findById(studentid);
-                    if(idresult == null) {
+                    if (idresult == null) {
                         System.out.println("\nNo students found with that ID!");
-                    }
-                    else {
+                    } else {
                         System.out.println(idresult);
                     }
                     break;
@@ -141,7 +147,7 @@ public class SchoolManagment {
 
             int selection = askUserForNumber("Select");
 
-            switch(selection) {
+            switch (selection) {
                 case 1:
                     Course course = new Course(
                             askUserFor("Course name"),
@@ -151,36 +157,41 @@ public class SchoolManagment {
                     courselist.saveCourse(course);
                     break;
                 case 2:
-                    break;
+                    try {
+                        deleteCourse(selectedCourse);
+                        break;
+                    } catch (Exception NullPointerException) { break; }
                 case 3:
-                    break;
+                    selectedCourse = selectCourse(courselist.findAll());
+                    try {
+                        System.out.println("Course selected: \n\n" + "Course ID: " + selectedCourse.getId() +
+                                    "\n" + "Course Name: " + selectedCourse.getCourseName());
+                        break;
+                    } catch(Exception NullPointerException) { break; }
                 case 4:
                     String name = askUserFor("Name");
                     List<Course> nameresult = courselist.findByName(name);
-                    if(nameresult.isEmpty()) {
+                    if (nameresult.isEmpty()) {
                         System.out.println("\nNo courses found with that name!");
-                    }
-                    else {
+                    } else {
                         nameresult.forEach(System.out::println);
                     }
                     break;
                 case 5:
                     LocalDate date = askUserForDate("Start Date");
                     List<Course> dateresult = courselist.findByDate(date);
-                    if(dateresult.isEmpty()) {
+                    if (dateresult.isEmpty()) {
                         System.out.println("\nNo courses found starting on that date!");
-                    }
-                    else {
+                    } else {
                         dateresult.forEach(System.out::println);
                     }
                     break;
                 case 6:
                     int courseid = askUserForNumber("Course ID");
                     Course idresult = courselist.findById(courseid);
-                    if(idresult == null) {
+                    if (idresult == null) {
                         System.out.println("\nNo courses found with that ID!");
-                    }
-                    else {
+                    } else {
                         System.out.println(idresult);
                     }
                     break;
@@ -188,15 +199,178 @@ public class SchoolManagment {
                     courselist.findAll().forEach(System.out::println);
                     break;
                 case 8:
-                    break;
+                    try {
+                        registerStudent(selectedStudent, selectedCourse);
+                        break;
+                    } catch (Exception NullPointException) { break; }
                 case 9:
-                    break;
+                    try {
+                        unregisterStudent(selectedStudent,selectedCourse);
+                        break;
+                    } catch (Exception NullPointException) { break; }
                 case 0:
                     looping = false;
                     break;
                 default:
                     System.out.println("Incorrect selection!");
                     break;
+            }
+        }
+    }
+
+    public void deleteStudent(Student student) {
+        if (student == null) {
+            System.out.println("No student selected. Run the selection function first");
+        }
+        boolean idiotProtection = true;
+        while (idiotProtection) {
+            System.out.println("\nAre you sure you want to delete student " + student.getName() + " from the system? (Y/N):");
+            switch (scanner.nextLine().charAt(0)) {
+                case 'Y':
+                    studentlist.deleteStudent(student);
+                    System.out.println("\n\nStudent deleted!");
+                    selectedStudent = null;
+                    idiotProtection = false;
+                    break;
+                case 'N':
+                    idiotProtection = false;
+                    break;
+                default:
+                    System.out.println("Not a valid answer! Answer Y or N only");
+            }
+        }
+    }
+
+    private Student selectStudent(List<Student> students) {
+        try {
+            if (students.isEmpty()) {
+                System.out.println("No students enrolled! Add some first");
+            } else {
+                int indexOfStudent = -1;
+                students.forEach(System.out::println);
+                indexOfStudent = askUserForNumber("Student ID");
+                for (Student s : students) {
+                    if (indexOfStudent == s.getId()) {
+                        return s;
+                    }
+                }
+                System.out.println("Invalid Student ID!");
+                return null;
+            }
+            return null;
+        } catch (Exception NullPointerException) {
+            return null;
+        }
+    }
+
+    public void deleteCourse(Course course) {
+        if (course == null) {
+            System.out.println("No coourse selected. Run the selection function first");
+        }
+        boolean idiotProtection = true;
+        while (idiotProtection) {
+            System.out.println("\nAre you sure you want to delete the course " + course.getCourseName() + " from the system? (Y/N):");
+            switch (scanner.nextLine().charAt(0)) {
+                case 'Y':
+                    courselist.removeCourse(course);
+                    System.out.println("\n\nCourse deleted!");
+                    selectedCourse = null;
+                    idiotProtection = false;
+                    break;
+                case 'N':
+                    idiotProtection = false;
+                    break;
+                default:
+                    System.out.println("Not a valid answer! Answer Y or N only");
+            }
+        }
+    }
+
+    private Course selectCourse(List<Course> courses) {
+        try {
+            if (courses.isEmpty()) {
+                System.out.println("No courses found! Add some first");
+            } else {
+                int indexOfCourse = -1;
+                courses.forEach(System.out::println);
+                indexOfCourse = askUserForNumber("Course ID");
+                for (Course c : courses) {
+                    if (indexOfCourse == c.getId()) {
+                        return c;
+                    }
+                }
+                System.out.println("Invalid Course ID!");
+                return null;
+            }
+            return null;
+        } catch (Exception NullPointerException) {
+            return null;
+        }
+    }
+
+    public void registerStudent(Student student, Course course) {
+        if (student == null) {
+            System.out.println("No student selected. Run the student selection function first");
+        }
+        else if (course == null) {
+                System.out.println("No course selected. Run the course selection function first");
+        }
+        boolean idiotProtection = true;
+        while (idiotProtection) {
+            if(student.getCourses().contains(course) && course.getStudents().contains(student)){
+                System.out.println("That student is already registered to that course!");
+                idiotProtection = false;
+            }
+            else {
+                System.out.println("\nAre you sure you want to register " + student.getName() + " to the " + course.getCourseName() + " course (Y/N):");
+                switch (scanner.nextLine().charAt(0)) {
+                    case 'Y':
+                        selectedCourse.register(student);
+                        System.out.println("\n\nStudent " + student.getName() + " registered to " + course.getCourseName());
+                        selectedStudent = null;
+                        selectedCourse = null;
+                        idiotProtection = false;
+                        break;
+                    case 'N':
+                        idiotProtection = false;
+                        break;
+                    default:
+                        System.out.println("Not a valid answer! Answer Y or N only");
+                }
+            }
+
+        }
+    }
+
+    public void unregisterStudent(Student student, Course course) {
+    if (student == null) {
+        System.out.println("No student selected. Run the student selection function first");
+    }
+        else if (course == null) {
+        System.out.println("No course selected. Run the course selection function first");
+    }
+    boolean idiotProtection = true;
+        while (idiotProtection) {
+            if(!course.getStudents().contains(course) && !student.getCourses().contains(student)){
+                System.out.println("That student is not registered to that course!");
+                idiotProtection = false;
+            }
+            else {
+                System.out.println("\nAre you sure you want to unregister " + student.getName() + " from the " + course.getCourseName() + " course (Y/N):");
+                switch (scanner.nextLine().charAt(0)) {
+                    case 'Y':
+                        selectedCourse.unregister(student);
+                        System.out.println("\n\nStudent " + student.getName() + " unregistered from " + course.getCourseName());
+                        selectedStudent = null;
+                        selectedCourse = null;
+                        idiotProtection = false;
+                        break;
+                    case 'N':
+                        idiotProtection = false;
+                        break;
+                    default:
+                        System.out.println("Not a valid answer! Answer Y or N only");
+                }
             }
         }
     }

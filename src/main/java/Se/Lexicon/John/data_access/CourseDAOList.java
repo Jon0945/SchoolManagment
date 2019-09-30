@@ -1,7 +1,6 @@
 package Se.Lexicon.John.data_access;
 
 import Se.Lexicon.John.Course;
-import Se.Lexicon.John.Student;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

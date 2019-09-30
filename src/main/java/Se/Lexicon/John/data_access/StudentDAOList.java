@@ -10,8 +10,6 @@ public class StudentDAOList implements StudentDAO {
         students = new ArrayList<Student>();
     }
 
-    public List<Student> getStudents() { return students; }
-
     @Override
     public Student saveStudent(Student student) {
         students.add(student);

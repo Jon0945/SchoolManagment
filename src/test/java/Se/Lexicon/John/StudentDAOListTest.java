@@ -43,7 +43,7 @@ public class StudentDAOListTest {
 
     @Test
     public void testFindByEmail_WrongEmail() {
-        assertNull(testDAOlist.findByEmail("sture.test@gmail.com"));
+        assertNull(testDAOlist.findByEmail("sture.test@microsoft.com"));
 
     }
 

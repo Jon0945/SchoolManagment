@@ -119,4 +119,16 @@ public class CourseTest {
         assertTrue(testStudent.getCourses().isEmpty());
     }
 
+    @Test
+    public void testToString() {
+
+        //Act
+        String result = testCourse.toString();
+
+        //Assert
+        assertTrue(result.contains(testCourseName));
+        assertTrue(result.contains(String.valueOf(testStartDate)));
+        assertTrue(result.contains(String.valueOf(testWeekDuration)));
+    }
+
 }

@@ -91,4 +91,16 @@ public class StudentTest {
         assertTrue(testStudent.getCourses().contains(testCourse));
     }
 
+    @Test
+    public void testToString() {
+
+        //Act
+        String result = testStudent.toString();
+
+        //Assert
+        assertTrue(result.contains(testName));
+        assertTrue(result.contains(testEmail));
+        assertTrue(result.contains(testAdress));
+    }
+
 }
