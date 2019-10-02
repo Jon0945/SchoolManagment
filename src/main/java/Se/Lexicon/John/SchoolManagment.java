@@ -3,7 +3,6 @@ package Se.Lexicon.John;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
-
 import Se.Lexicon.John.data_access.StudentDAOList;
 import Se.Lexicon.John.data_access.CourseDAOList;
 
@@ -241,7 +240,7 @@ public class SchoolManagment {
         }
     }
 
-    private Student selectStudent(List<Student> students) {
+    public Student selectStudent(List<Student> students) {
         try {
             if (students.isEmpty()) {
                 System.out.println("No students enrolled! Add some first");
@@ -286,7 +285,7 @@ public class SchoolManagment {
         }
     }
 
-    private Course selectCourse(List<Course> courses) {
+    public Course selectCourse(List<Course> courses) {
         try {
             if (courses.isEmpty()) {
                 System.out.println("No courses found! Add some first");
@@ -376,23 +375,23 @@ public class SchoolManagment {
     }
 
     public String askUserFor(String name)
-        {
+    {
             System.out.print("Please enter " + name + ": ");
             String inputFromUser = scanner.nextLine();
 
             return inputFromUser;
-        }
+    }
 
-        public int askUserForNumber(String name)
-        {
+    public int askUserForNumber(String name)
+    {
             int number = Integer.parseInt(askUserFor(name));
             return number;
-        }
+    }
 
-        public LocalDate askUserForDate(String inputdate)
-        {
+    public LocalDate askUserForDate(String inputdate)
+    {
             LocalDate date = LocalDate.parse(askUserFor(inputdate));
             return date;
-        }
     }
+}
 
