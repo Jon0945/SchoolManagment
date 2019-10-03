@@ -3,7 +3,6 @@ package Se.Lexicon.John;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Course {
     //Static Field

@@ -32,23 +32,25 @@ public class SchoolManagment {
                     "1: Student Management\n" +
                     "2: Course Management\n" +
                     "3: Quit Program\n");
-
+            try {
             int selection = askUserForNumber("Select");
-
-            switch (selection) {
-                case 1:
-                    studentManagement();
-                    break;
-                case 2:
-                    courseManagement();
-                    break;
-                case 3:
-                    keepLooping = false;
-                    System.out.println("Bye Bye!");
-                    break;
-                default:
-                    System.out.println("Incorrect selection!");
-                    break;
+                switch (selection) {
+                    case 1:
+                        studentManagement();
+                        break;
+                    case 2:
+                        courseManagement();
+                        break;
+                    case 3:
+                        keepLooping = false;
+                        System.out.println("Bye Bye!");
+                        break;
+                    default:
+                        System.out.println("Incorrect selection!");
+                        break;
+                }
+            } catch (Exception NumberFormatException) {
+                System.out.println("Error! Only input numbers");
             }
         }
     }
@@ -66,65 +68,73 @@ public class SchoolManagment {
                     "7: List All Students\n" +
                     "8: Return to Main Menu\n");
 
-            int selection = askUserForNumber("Selection");
+            try {
+                int selection = askUserForNumber("Selection");
 
-            switch (selection) {
-                case 1:
-                    Student student = new Student(
-                            askUserFor("Student name"),
-                            askUserFor("Email"),
-                            askUserFor("Address")
-                    );
-                    studentlist.saveStudent(student);
-                    break;
-                case 2:
-                    try {
-                        deleteStudent(selectedStudent);
+                switch (selection) {
+                    case 1:
+                        Student student = new Student(
+                                askUserFor("Student name"),
+                                askUserFor("Email"),
+                                askUserFor("Address")
+                        );
+                        studentlist.saveStudent(student);
                         break;
-                    } catch (Exception NullPointerException) { break; }
-                case 3:
-                    selectedStudent = selectStudent(studentlist.findAll());
-                    try {
-                        System.out.println("Student selected: \n\n" + "Student ID: " + selectedStudent.getId() +
-                                "\n" + "Student Name: " + selectedStudent.getName());
+                    case 2:
+                        try {
+                            deleteStudent(selectedStudent);
+                            break;
+                        } catch (Exception NullPointerException) {
+                            break;
+                        }
+                    case 3:
+                        selectedStudent = selectStudent(studentlist.findAll());
+                        try {
+                            System.out.println("Student selected: \n\n" + "Student ID: " + selectedStudent.getId() +
+                                    "\n" + "Student Name: " + selectedStudent.getName());
+                            break;
+                        } catch (Exception NullPointerException) {
+                            break;
+                        }
+                    case 4:
+                        String name = askUserFor("Name");
+                        List<Student> nameresult = studentlist.findByName(name);
+                        if (nameresult.isEmpty()) {
+                            System.out.println("\nNo students found with that name!");
+                        } else {
+                            nameresult.forEach(System.out::println);
+                        }
                         break;
-                    } catch(Exception NullPointerException) { break; }
-                case 4:
-                    String name = askUserFor("Name");
-                    List<Student> nameresult = studentlist.findByName(name);
-                    if (nameresult.isEmpty()) {
-                        System.out.println("\nNo students found with that name!");
-                    } else {
-                        nameresult.forEach(System.out::println);
-                    }
-                    break;
-                case 5:
-                    String email = askUserFor("Email");
-                    Student emailresult = studentlist.findByEmail(email);
-                    if (emailresult == null) {
-                        System.out.println("\nNo students found with that email!");
-                    } else {
-                        System.out.println(emailresult);
-                    }
-                    break;
-                case 6:
-                    int studentid = askUserForNumber("Student ID");
-                    Student idresult = studentlist.findById(studentid);
-                    if (idresult == null) {
-                        System.out.println("\nNo students found with that ID!");
-                    } else {
-                        System.out.println(idresult);
-                    }
-                    break;
-                case 7:
-                    studentlist.findAll().forEach(System.out::println);
-                    break;
-                case 8:
-                    looping = false;
-                    break;
-                default:
-                    System.out.println("Incorrect selection!");
-                    break;
+                    case 5:
+                        String email = askUserFor("Email");
+                        Student emailresult = studentlist.findByEmail(email);
+                        if (emailresult == null) {
+                            System.out.println("\nNo students found with that email!");
+                        } else {
+                            System.out.println(emailresult);
+                        }
+                        break;
+                    case 6:
+                        int studentid = askUserForNumber("Student ID");
+                        Student idresult = studentlist.findById(studentid);
+                        if (idresult == null) {
+                            System.out.println("\nNo students found with that ID!");
+                        } else {
+                            System.out.println(idresult);
+                        }
+                        break;
+                    case 7:
+                        studentlist.findAll().forEach(System.out::println);
+                        break;
+                    case 8:
+                        looping = false;
+                        break;
+                    default:
+                        System.out.println("Incorrect selection!");
+                        break;
+                }
+            }catch (Exception NumberFormatException) {
+                System.out.println("Error! Only input numbers!");
             }
         }
     }
@@ -143,76 +153,87 @@ public class SchoolManagment {
                     "8: Register Student for Course\n" +
                     "9: Remove Student from Course\n" +
                     "0: Return to Main Menu\n");
+            try {
+                int selection = askUserForNumber("Select");
 
-            int selection = askUserForNumber("Select");
-
-            switch (selection) {
-                case 1:
-                    Course course = new Course(
-                            askUserFor("Course name"),
-                            askUserForDate("Course Start date"),
-                            askUserForNumber("Course Length")
-                    );
-                    courselist.saveCourse(course);
-                    break;
-                case 2:
-                    try {
-                        deleteCourse(selectedCourse);
+                switch (selection) {
+                    case 1:
+                        Course course = new Course(
+                                askUserFor("Course name"),
+                                askUserForDate("Course Start date"),
+                                askUserForNumber("Course Length")
+                        );
+                        courselist.saveCourse(course);
                         break;
-                    } catch (Exception NullPointerException) { break; }
-                case 3:
-                    selectedCourse = selectCourse(courselist.findAll());
-                    try {
-                        System.out.println("Course selected: \n\n" + "Course ID: " + selectedCourse.getId() +
+                    case 2:
+                        try {
+                            deleteCourse(selectedCourse);
+                            break;
+                        } catch (Exception NullPointerException) {
+                            break;
+                        }
+                    case 3:
+                        selectedCourse = selectCourse(courselist.findAll());
+                        try {
+                            System.out.println("Course selected: \n\n" + "Course ID: " + selectedCourse.getId() +
                                     "\n" + "Course Name: " + selectedCourse.getCourseName());
+                            break;
+                        } catch (Exception NullPointerException) {
+                            break;
+                        }
+                    case 4:
+                        String name = askUserFor("Name");
+                        List<Course> nameresult = courselist.findByName(name);
+                        if (nameresult.isEmpty()) {
+                            System.out.println("\nNo courses found with that name!");
+                        } else {
+                            nameresult.forEach(System.out::println);
+                        }
                         break;
-                    } catch(Exception NullPointerException) { break; }
-                case 4:
-                    String name = askUserFor("Name");
-                    List<Course> nameresult = courselist.findByName(name);
-                    if (nameresult.isEmpty()) {
-                        System.out.println("\nNo courses found with that name!");
-                    } else {
-                        nameresult.forEach(System.out::println);
-                    }
-                    break;
-                case 5:
-                    LocalDate date = askUserForDate("Start Date");
-                    List<Course> dateresult = courselist.findByDate(date);
-                    if (dateresult.isEmpty()) {
-                        System.out.println("\nNo courses found starting on that date!");
-                    } else {
-                        dateresult.forEach(System.out::println);
-                    }
-                    break;
-                case 6:
-                    int courseid = askUserForNumber("Course ID");
-                    Course idresult = courselist.findById(courseid);
-                    if (idresult == null) {
-                        System.out.println("\nNo courses found with that ID!");
-                    } else {
-                        System.out.println(idresult);
-                    }
-                    break;
-                case 7:
-                    courselist.findAll().forEach(System.out::println);
-                    break;
-                case 8:
-                    try {
-                        registerStudent(selectedStudent, selectedCourse);
+                    case 5:
+                        LocalDate date = askUserForDate("Start Date");
+                        List<Course> dateresult = courselist.findByDate(date);
+                        if (dateresult.isEmpty()) {
+                            System.out.println("\nNo courses found starting on that date!");
+                        } else {
+                            dateresult.forEach(System.out::println);
+                        }
                         break;
-                    } catch (Exception NullPointException) { break; }
-                case 9:
-                    try {
-                        unregisterStudent(selectedStudent,selectedCourse);
+                    case 6:
+                        int courseid = askUserForNumber("Course ID");
+                        Course idresult = courselist.findById(courseid);
+                        if (idresult == null) {
+                            System.out.println("\nNo courses found with that ID!");
+                        } else {
+                            System.out.println(idresult);
+                        }
                         break;
-                    } catch (Exception NullPointException) { break; }
-                case 0:
-                    looping = false;
-                    break;
-                default:
-                    System.out.println("Incorrect selection!");
-                    break;
+                    case 7:
+                        courselist.findAll().forEach(System.out::println);
+                        break;
+                    case 8:
+                        try {
+                            registerStudent(selectedStudent, selectedCourse);
+                            break;
+                        } catch (Exception NullPointException) {
+                            break;
+                        }
+                    case 9:
+                        try {
+                            unregisterStudent(selectedStudent, selectedCourse);
+                            break;
+                        } catch (Exception NullPointException) {
+                            break;
+                        }
+                    case 0:
+                        looping = false;
+                        break;
+                    default:
+                        System.out.println("Incorrect selection!");
+                        break;
+                }
+            }catch (Exception NumberFormatException) {
+                System.out.println("Error! Only input numbers");
             }
         }
     }
@@ -394,4 +415,3 @@ public class SchoolManagment {
             return date;
     }
 }
-
